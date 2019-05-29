@@ -83,7 +83,7 @@ def is_move_valid_special(loc, act):
     :param act: string，动作标示
     :return: boolean，是否可执行
     """
-    row_index = loc[0]
+	row_index = loc[0]
     col_index = loc[1]
     if 'u' == act:
         row_index -= 1
@@ -145,7 +145,8 @@ def is_move_valid(env_data, loc, act):
 # 问题1，答：任务4的函数中的env_data为全局变量，任务5的函数中的env_data为传递参数变量，是局部变量
 
 # 提示：可以尝试从可变类型变量和不可变类型变量的角度回答该问题2。
-# 问题2，答：会，因为list是可变类型，env_data_和env_data一样是指向同一实例list的引用
+# 问题2，答：会，list是可变类型，函数中的传参是传递引用，所以改变env_data会修改env_data_的值。
+#          如果是非可变类型，那么是传递值，等于复制了一份给函数使用，如int，string等等
 
 
 # 任务7：编写一个名为 valid_actions 的函数。
@@ -196,16 +197,16 @@ def move_robot(loc, act):
 # 当机器人走到终点时，输出“在第n个回合找到宝藏！”。
 # 提示：如果机器人无法在300个回合内找到宝藏的话，试试看增大这个数字，也许会有不错的效果 :P
 
-def random_choose_actions(env_data, loc):
+def do_random_choose(round_num, loc, target):
     """
-    随机选择机器人移动动作，尝试达到目标找到宝藏
-    :param env_data: list，模拟环境
+    随机选择机器人移动动作，可传递执行回合数
+    :param round_num: int, 回合数
     :param loc: tuple, 机器人位置
-    :return: void，无返回
+    :param target: void，无返回
+    :return:
     """
-    target = find_row_col_index(target_mark, env_data)
     loc_now = loc
-    for step in range(300):
+    for step in range(round_num):
         if loc_now == target:
             print("在第{}个回合找到宝藏！".format(step + 1))
             break
@@ -214,6 +215,17 @@ def random_choose_actions(env_data, loc):
             action = random.choice(valid_action_list)
             loc_now = move_robot(loc_now, action)
             print("robot现在在位置{}, 回合{}".format(loc_now, step + 1))
+
+def random_choose_actions(env_data, loc):
+    """
+    随机选择机器人移动动作，尝试达到目标找到宝藏
+    :param env_data: list，模拟环境
+    :param loc: tuple, 机器人位置
+    :return: void，无返回
+    """
+    target = find_row_col_index(target_mark, env_data)
+	do_random_choose(300, loc, target)
+    do_random_choose(1000, loc, target)
 
 
 # 任务10：尝试实现一个算法，能够对给定的模拟环境，输出机器人的行动策略，使之能够走到终点。
