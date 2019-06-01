@@ -83,7 +83,7 @@ def is_move_valid_special(loc, act):
     :param act: string，动作标示
     :return: boolean，是否可执行
     """
-	row_index = loc[0]
+    row_index = loc[0]
     col_index = loc[1]
     if 'u' == act:
         row_index -= 1
@@ -224,7 +224,7 @@ def random_choose_actions(env_data, loc):
     :return: void，无返回
     """
     target = find_row_col_index(target_mark, env_data)
-	do_random_choose(300, loc, target)
+    do_random_choose(300, loc, target)
     do_random_choose(1000, loc, target)
 
 
